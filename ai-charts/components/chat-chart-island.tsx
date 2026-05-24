@@ -508,6 +508,7 @@ export default function ChatChartIsland() {
               </div>
               <div className="min-h-0 flex-1">
                 <EChartsReact
+                  notMerge
                   option={chartOption}
                   ref={chartRef}
                   style={chartStyle}
