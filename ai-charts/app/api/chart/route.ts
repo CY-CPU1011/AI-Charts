@@ -51,6 +51,7 @@ export async function POST(request: Request): Promise<Response> {
 
     const content = completion.choices[0]?.message.content;
     if (!content) {
+      console.error("[api/chart] DeepSeek returned empty content.");
       return errorResponse("model_error", 502);
     }
 
@@ -58,6 +59,7 @@ export async function POST(request: Request): Promise<Response> {
     try {
       modelOutput = JSON.parse(content);
     } catch {
+      console.error("[api/chart] DeepSeek returned invalid JSON.");
       return errorResponse("model_error", 502);
     }
 
@@ -67,6 +69,12 @@ export async function POST(request: Request): Promise<Response> {
 
     const chartResult = ChartSpecSchema.safeParse(modelOutput);
     if (!chartResult.success) {
+      console.error("[api/chart] DeepSeek response failed chart validation.", {
+        issues: chartResult.error.issues.map(({ code, path }) => ({
+          code,
+          path: path.join("."),
+        })),
+      });
       return errorResponse("model_error", 502);
     }
 
@@ -78,7 +86,10 @@ export async function POST(request: Request): Promise<Response> {
         turns.at(-1)?.content ?? "",
         chartResult.data,
       );
-    } catch {
+    } catch (error) {
+      console.error("[api/chart] Supabase history save failed.", {
+        name: error instanceof Error ? error.name : "UnknownError",
+      });
       historyWarning = "save_failed";
     }
 
@@ -90,8 +101,20 @@ export async function POST(request: Request): Promise<Response> {
     };
     return Response.json(response);
   } catch (error) {
-    if (error instanceof OpenAI.APIError && error.status === 429) {
-      return errorResponse("rate_limited", 429);
+    if (error instanceof OpenAI.APIError) {
+      console.error("[api/chart] DeepSeek API request failed.", {
+        code: error.code,
+        status: error.status,
+        type: error.name,
+      });
+
+      if (error.status === 429) {
+        return errorResponse("rate_limited", 429);
+      }
+    } else {
+      console.error("[api/chart] Unexpected request failure.", {
+        name: error instanceof Error ? error.name : "UnknownError",
+      });
     }
 
     return errorResponse("model_error", 502);
