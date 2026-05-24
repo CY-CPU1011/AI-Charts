@@ -1,4 +1,8 @@
 {
+  "hero": {
+    "title": "把想法变成图表",
+    "subtitle": "用自然语言描述数据，AI 帮你生成图表"
+  },
   "placeholder": {
     "empty": "描述你的数据和希望生成的图表...",
     "followup": "继续修改图表，例如：改成折线图..."
@@ -12,6 +16,8 @@
   },
   "history": {
     "title": "历史记录",
+    "today": "今天",
+    "yesterday": "昨天",
     "refresh": "刷新历史记录",
     "empty": "生成的图表会显示在这里。",
     "loadError": "历史记录加载失败，请检查 Supabase 配置。",

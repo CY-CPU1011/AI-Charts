@@ -27,7 +27,7 @@ export default function LanguageSwitcher() {
       <DropdownMenuTrigger asChild>
         <Button
           aria-label={t("switcher.label")}
-          className="gap-2 bg-background/80 backdrop-blur"
+          className="gap-2 border-[#e5e5e5] bg-white text-[#1a1a1a] transition-colors hover:border-[#d4d4d4] hover:bg-[#fafafa]"
           size="sm"
           variant="outline"
         >

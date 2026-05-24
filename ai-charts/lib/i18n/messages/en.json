@@ -1,4 +1,8 @@
 {
+  "hero": {
+    "title": "From words to charts",
+    "subtitle": "Describe your data in plain language — AI handles the rest"
+  },
   "placeholder": {
     "empty": "Describe your data and the chart you want to see...",
     "followup": "Refine the chart, for example: change it to a line chart..."
@@ -12,6 +16,8 @@
   },
   "history": {
     "title": "History",
+    "today": "Today",
+    "yesterday": "Yesterday",
     "refresh": "Refresh history",
     "empty": "Your generated charts will appear here.",
     "loadError": "Could not load history. Check your Supabase configuration.",

@@ -45,17 +45,17 @@ export default async function LocaleLayout({
       className={geist.className}
       suppressHydrationWarning
     >
-      <body className="min-h-dvh antialiased" suppressHydrationWarning>
+      <body className="min-h-dvh bg-white antialiased" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
-          <header className="pointer-events-none fixed inset-x-0 top-0 z-20 flex items-center justify-between px-4 py-4 sm:px-6">
+          <header className="pointer-events-none fixed inset-x-0 top-0 z-20 flex animate-fade-in-up items-center justify-between px-4 py-4 sm:px-6">
             <div className="flex items-center gap-3">
               <span
                 aria-hidden="true"
-                className="flex size-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm"
+                className="flex size-10 items-center justify-center rounded-xl bg-[#1a1a1a] text-white"
               >
                 <ChartNoAxesCombined className="size-5" strokeWidth={2.25} />
               </span>
-              <h1 className="text-lg font-semibold tracking-tight text-foreground">
+              <h1 className="text-lg font-semibold tracking-tight text-[#1a1a1a]">
                 AI Charts
               </h1>
             </div>
