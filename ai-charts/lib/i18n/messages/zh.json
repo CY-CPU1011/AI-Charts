@@ -1,0 +1,28 @@
+{
+  "placeholder": {
+    "empty": "描述你的数据和希望生成的图表...",
+    "followup": "继续修改图表，例如：改成折线图..."
+  },
+  "button": {
+    "submit": "生成图表",
+    "download": "下载图片"
+  },
+  "loading": {
+    "label": "正在生成图表..."
+  },
+  "error": {
+    "no_data": "请输入有效的数据",
+    "model": "图表生成失败，请重试。",
+    "model_error": "图表生成失败，请重试。",
+    "validation": "请求或生成的图表无效，请重试。",
+    "validation_error": "请求或生成的图表无效，请重试。",
+    "rate_limited": "请求过于频繁，请稍后重试。"
+  },
+  "language": {
+    "switcher": {
+      "label": "切换语言"
+    },
+    "zh": "中文",
+    "en": "English"
+  }
+}

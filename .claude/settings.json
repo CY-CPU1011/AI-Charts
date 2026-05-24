@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm dev *)",
+      "PowerShell(pnpm dlx shadcn@latest init --yes --cwd 'E:\\\\code project\\\\AI Charts\\\\ai-charts' 2>&1)"
+    ]
+  }
+}

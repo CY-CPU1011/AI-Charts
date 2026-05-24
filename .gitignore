@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Node / Next.js (the app itself lives in ai-charts/ and has its own .gitignore;
+# this catches anything stray at the repo root)
+node_modules/
+*.log
+.env*
+
+# Speckit ephemeral
+.specify/cache/

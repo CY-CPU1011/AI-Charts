@@ -1,0 +1,28 @@
+{
+  "placeholder": {
+    "empty": "Describe your data and the chart you want to see...",
+    "followup": "Refine the chart, for example: change it to a line chart..."
+  },
+  "button": {
+    "submit": "Generate chart",
+    "download": "Download PNG"
+  },
+  "loading": {
+    "label": "Generating chart..."
+  },
+  "error": {
+    "no_data": "Please provide valid data to visualize.",
+    "model": "Chart generation failed. Please try again.",
+    "model_error": "Chart generation failed. Please try again.",
+    "validation": "The request or generated chart was invalid. Please try again.",
+    "validation_error": "The request or generated chart was invalid. Please try again.",
+    "rate_limited": "Too many requests. Please try again later."
+  },
+  "language": {
+    "switcher": {
+      "label": "Change language"
+    },
+    "zh": "Chinese",
+    "en": "English"
+  }
+}
