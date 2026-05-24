@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Charts
 
-## Getting Started
+Generate ECharts visualizations from natural-language data prompts with DeepSeek,
+and keep a reloadable chart history in Supabase.
 
-First, run the development server:
+## Local Development
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Create `ai-charts/.env.local` or keep equivalent values in your local
+`ai-charts/.env` file:
+
+```env
+DEEPSEEK_API_KEY=your_deepseek_api_key
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SECRET_KEY=your_supabase_secret_key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`SUPABASE_URL` must be the project base URL, such as
+`https://your-project.supabase.co`. Do not append `/rest/v1`; the Supabase
+client adds its API path automatically.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Optional DeepSeek overrides:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+DEEPSEEK_BASE_URL=https://api.deepseek.com
+DEEPSEEK_MODEL=deepseek-chat
+```
 
-## Learn More
+Use the Supabase **secret** API key for `SUPABASE_SECRET_KEY`. It is consumed
+only inside Next.js route handlers and must never use a `NEXT_PUBLIC_` prefix
+or be committed to Git.
 
-To learn more about Next.js, take a look at the following resources:
+Run the development server:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm install
+pnpm dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open [http://localhost:3000/zh](http://localhost:3000/zh).
 
-## Deploy on Vercel
+## Supabase History Table
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The application expects `public.chart_history` with these fields:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```sql
+create table if not exists public.chart_history (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  description text not null
+    check (length(btrim(description)) > 0),
+  chart_config jsonb not null
+    check (jsonb_typeof(chart_config) = 'object'),
+  chart_type text not null
+    check (length(btrim(chart_type)) > 0)
+);
+
+create index if not exists chart_history_created_at_idx
+  on public.chart_history (created_at desc);
+
+alter table public.chart_history enable row level security;
+
+revoke all on table public.chart_history from anon, authenticated;
+grant select, insert, update, delete
+  on table public.chart_history
+  to service_role;
+```
+
+`chart_config` stores the validated ECharts `option` object returned by the
+model. Combined with `chart_type`, it allows a saved record to reload the
+rendered chart.
+
+## Vercel Deployment
+
+When importing the GitHub repository in Vercel, set the project root directory
+to `ai-charts`, then configure these server-side environment variables for
+Production and Preview:
+
+```env
+DEEPSEEK_API_KEY=...
+SUPABASE_URL=...
+SUPABASE_SECRET_KEY=...
+```

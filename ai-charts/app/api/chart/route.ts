@@ -9,6 +9,7 @@ import {
 } from "@/lib/contracts/chart";
 import { getOpenAIClient } from "@/lib/deepseek/client";
 import { buildSystemPrompt } from "@/lib/deepseek/system-prompt";
+import { createChartHistory } from "@/lib/supabase/chart-history";
 
 export const runtime = "nodejs";
 
@@ -69,7 +70,24 @@ export async function POST(request: Request): Promise<Response> {
       return errorResponse("model_error", 502);
     }
 
-    const response: ChartSuccess = { ok: true, spec: chartResult.data };
+    let history: ChartSuccess["history"];
+    let historyWarning: ChartSuccess["historyWarning"];
+
+    try {
+      history = await createChartHistory(
+        turns.at(-1)?.content ?? "",
+        chartResult.data,
+      );
+    } catch {
+      historyWarning = "save_failed";
+    }
+
+    const response: ChartSuccess = {
+      ok: true,
+      spec: chartResult.data,
+      ...(history ? { history } : {}),
+      ...(historyWarning ? { historyWarning } : {}),
+    };
     return Response.json(response);
   } catch (error) {
     if (error instanceof OpenAI.APIError && error.status === 429) {

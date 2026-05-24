@@ -10,6 +10,18 @@
   "loading": {
     "label": "Generating chart..."
   },
+  "history": {
+    "title": "History",
+    "refresh": "Refresh history",
+    "empty": "Your generated charts will appear here.",
+    "loadError": "Could not load history. Check your Supabase configuration.",
+    "retry": "Retry",
+    "saveError": "The chart was generated, but it could not be saved to history.",
+    "delete": "Delete record",
+    "deleteConfirm": "Delete this history record?",
+    "deleteSuccess": "History record deleted.",
+    "deleteError": "Could not delete the history record. Please try again."
+  },
   "error": {
     "no_data": "Please provide valid data to visualize.",
     "model": "Chart generation failed. Please try again.",

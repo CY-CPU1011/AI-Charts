@@ -10,6 +10,18 @@
   "loading": {
     "label": "正在生成图表..."
   },
+  "history": {
+    "title": "历史记录",
+    "refresh": "刷新历史记录",
+    "empty": "生成的图表会显示在这里。",
+    "loadError": "历史记录加载失败，请检查 Supabase 配置。",
+    "retry": "重试",
+    "saveError": "图表已生成，但历史记录保存失败。",
+    "delete": "删除记录",
+    "deleteConfirm": "确定删除这条历史记录吗？",
+    "deleteSuccess": "历史记录已删除。",
+    "deleteError": "历史记录删除失败，请重试。"
+  },
   "error": {
     "no_data": "请输入有效的数据",
     "model": "图表生成失败，请重试。",
